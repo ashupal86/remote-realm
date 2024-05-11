@@ -1,28 +1,16 @@
 {% extends 'base.html' %} {% block content %}
 <div class="players">
 </div>
-<h1>room {{code}}</h1>
-
+<h1>room <h1 id="code">{{code}}</h1></h1>
+<h1>hello <span id="name"></span></h1>
 <div class="count" ><p id="count"></p></div>
 <div class="players" ><p id="players"></p></div>
+<button id="start" onclick="start()" value="start"  >Start</button>
+{% if error%}
+<p>{{error}}</p>
+{% endif %}
 
 
-<script type="text/javascript">
-  var socketio = io('http://'+window.location.host);
 
-  const messages = document.getElementById("messages");
- socketio.on('join', (data) => {
-    console.log(data.name,data.total,data.players);
-    $('#count').append(data.players);
-    $('#players').append(data.name,":",data.msg);
-   
- });
- socketio.on('leave',(data)=>{
-   console.log(data.name,data.total,data.players);
-   $('#count').text(data.players);
-    $('#players').text(data.name);
- });
-
-</script>
 
 {% endblock %}

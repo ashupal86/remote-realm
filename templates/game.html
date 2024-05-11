@@ -1,0 +1,73 @@
+{% extends 'base.html'%}
+{% block content %}
+
+<h1>hello world</h1>
+<p>{{username}}</p>
+<p id="para">{{roomid}}</p>
+
+<div class="game">
+    <div class="reveal">
+
+        <div id="king">
+            <img src="{{url_for('static',filename='king.jpg')}}" alt="" class="logo">
+        </div>
+        <div id="minister">
+            <img src="{{url_for('static',filename='minister.jpg')}}" alt="" class="logo">
+            
+        </div>
+    </div>
+    <div class="guess">
+        <h1>Who is Thief?</h1>
+        <div id="p1"class="card">
+            <img src="{{url_for('static',filename='human.png')}}" alt="" class="logo">
+
+        </div>
+        <div id="p2"class="card">
+            <img src="{{url_for('static',filename='human.jpg')}}" alt="" class="logo">
+
+        </div>
+        <button  hidden id="b1" class="btn"></button>
+        <button hidden id="b2" class="btn"></button>
+
+    </div>
+</div>
+
+
+<script>
+    function getKeyByValue(object, value) {
+        return Object.keys(object).find(key => object[key] === value);
+      }
+      
+      
+     
+      
+
+   var data='{{roles|tojson}}';
+    var roles=JSON.parse(data);
+    var username='{{username}}'
+    var role=roles[username];
+    if(role=="minister"){
+        $('#minister').text('minister');
+        const thief=getKeyByValue(roles,'thief');
+        const soilder=getKeyByValue(roles,'thief');
+        $('#b1').text=thief;
+        $('#b2').text=soilder;
+        
+        $('#b1').attr('hidden')=false;
+        $('#b2').attr('hidden')=false;
+
+
+    }
+    else if (role=='king'){
+        $('#king').text('king');
+        
+    }
+    else if(role=='soilder'){
+        $('#p1').text(username)
+    }
+    else if(role=='thief'){
+        $('#p2').text(username)
+    }
+    
+</script>
+{% endblock %}
